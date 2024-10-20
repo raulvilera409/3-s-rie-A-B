@@ -478,7 +478,7 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbx5iMaz8Hepg47TXIgD9eF7gsr2slPP191_7g6o7BwUEhNM2a4cdUA38crFOLYI73o8/exec', { // Substitua por seu URL do Web App
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwLf1TlPH42dBT1B9HXqrtNUhtSYqmlr153WnCIPKMdi2frQ5yqCXU9yag34KWT8xnV/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
                     mode: 'no-cors', // Necessário para evitar problemas de CORS
                     headers: {
