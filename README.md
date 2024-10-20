@@ -536,7 +536,7 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
 
             try {
-                const response = await fetch('[https://script.google.com/macros/s/AKfycbz-neHnSmuwthFUfxc5NMov_0JYuZkg1MZXz6X2Fy6kCNfRkvCb3_x1Sk8R2npoU-Y9/exechttps://script.google.com/macros/s/AKfycbz-neHnSmuwthFUfxc5NMov_0JYuZkg1MZXz6X2Fy6kCNfRkvCb3_x1Sk8R2npoU-Y9/exec](https://script.google.com/macros/s/AKfycbywbP3NB9cWLhjFXtzdelxqPm7abQ25HzIe1SGqETSnegWA68v66grXkT1J1rFTnnQ5/exec)', { // Substitua por seu URL do Web App
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwJuTUQ9KHVTSG12FJuS7qlbFDNT5A8WqBgIShgmlhuCIM23_eV5_xaAUH2yxdL9xJU/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
