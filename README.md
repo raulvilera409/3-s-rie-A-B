@@ -302,7 +302,7 @@
                 </div>
             </div>
 
-            <h2 style="text-align: center;">ATIVIDADE DE QUÍMICA APLICADA</h2>
+            <h2 style="text-align: center;">ATIVIDADE QUÍMICA APLICADA</h2>
             <p style="text-align: center;">TEMA: QUÍMICA ALIMENTAR</p>
 
             <div id="questoes-container"></div>
