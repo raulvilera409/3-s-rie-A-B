@@ -58,30 +58,30 @@
         }
         /* Cronômetro */
         .relogio {
-            width: 30px; /* Metade do tamanho original */
-            height: 30px; /* Metade do tamanho original */
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            font-size: 12px; /* Ajustado para o novo tamanho */
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: white;
             color: black;
             font-weight: bold;
-            border: 2px solid transparent; /* Removido o border padrão */
+            border: 2px solid transparent;
             background-image: linear-gradient(white, white), linear-gradient(to bottom, blue, lime);
             background-origin: border-box;
             background-clip: content-box, border-box;
-            position: absolute; /* Posicionado no canto superior esquerdo */
+            position: absolute;
             top: 15px;
             left: 15px;
         }
         /* Questão */
         .questao {
-            position: relative; /* Necessário para posicionar o cronômetro dentro da questão */
+            position: relative;
             margin-bottom: 30px;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px 20px 20px 60px; /* Espaço à esquerda para o cronômetro */
+            padding: 20px 20px 20px 60px;
             border-radius: 8px;
         }
         .questao p {
@@ -91,24 +91,24 @@
         /* Campo de Resposta */
         .resposta {
             width: 100%;
-            height: 240px; /* Ajustado para pelo menos 8 pautas */
+            height: 240px;
             padding: 10px;
             border-radius: 5px;
-            border: 2px solid #cccccc; /* Borda para definir o campo */
+            border: 2px solid #cccccc;
             resize: vertical;
             line-height: 1.5;
-            background-color: #ffffff; /* Fundo branco */
+            background-color: #ffffff;
             background-image: repeating-linear-gradient(
                 to bottom,
                 #ffffff 0px,
                 #ffffff 29px,
                 #e0e0e0 29px,
                 #e0e0e0 30px
-            ); /* Linhas em cinza claro */
+            );
             background-size: 100% 30px;
-            color: darkblue; /* Cor azul escura */
+            color: darkblue;
             font-size: 14px;
-            font-weight: bold; /* Texto em negrito */
+            font-weight: bold;
         }
         /* Estilização dos Campos de Seleção e Data */
         input[type="date"], select {
@@ -118,9 +118,9 @@
             border-radius: 5px;
             border: none;
             font-size: 14px;
-            color: darkblue; /* Cor azul escura */
-            font-weight: bold; /* Texto em negrito */
-            background-color: white; /* Fundo branco para contraste */
+            color: darkblue;
+            font-weight: bold;
+            background-color: white;
         }
         /* Botão de Envio */
         button {
@@ -146,16 +146,16 @@
             display: block;
             margin-bottom: 5px;
             cursor: pointer;
-            font-weight: bold; /* Texto em negrito */
-            color: white; /* Cor branca inicialmente */
+            font-weight: bold;
+            color: white;
         }
         /* Alterar a cor da alternativa selecionada para azul escura */
         .opcoes input[type="radio"]:checked + span {
-            color: darkblue; /* Cor azul escura quando selecionada */
+            color: darkblue;
         }
         /* Adicionar estilo para os spans dentro das labels */
         .opcoes label span {
-            color: white; /* Cor branca inicialmente */
+            color: white;
             transition: color 0.3s;
         }
         /* Estilo para as linhas entre questões */
@@ -478,7 +478,7 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwLf1TlPH42dBT1B9HXqrtNUhtSYqmlr153WnCIPKMdi2frQ5yqCXU9yag34KWT8xnV/exec', { // Substitua por seu URL do Web App
+                const response = await fetch('https://script.google.com/macros/s/AKfycby4TwkXw-L0a2N3t9IcHBwn6Irq-1MEm5bLHPLkGFOwc31frCBDWT9ahp3Tw0f3iNDc/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
                     mode: 'no-cors', // Necessário para evitar problemas de CORS
                     headers: {
