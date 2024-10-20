@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -162,6 +163,26 @@
             border-top: 2px solid #ffffff;
             margin: 30px 0;
         }
+        /* Feedback */
+        .feedback-container {
+            background-color: #ffffff;
+            color: #333333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .feedback-container h3 {
+            margin-top: 0;
+        }
+        .feedback-questao {
+            margin-bottom: 15px;
+        }
+        .feedback-questao.correct {
+            color: green;
+        }
+        .feedback-questao.incorrect {
+            color: red;
+        }
         /* Responsividade */
         @media (max-width: 768px) {
             .form-container {
@@ -232,6 +253,7 @@
                             <option>SOPHIA ALVIN SILVA</option>
                             <option>THAISSA RAMOS DA SILVA</option>
                             <option>THAYNÁ VIEIRA SANTOS</option>
+                            <!-- Novos nomes adicionados -->
                             <option>ÁGATA MIRELLA SANTOS DA ENCARNAÇÃO</option>
                             <option>ALANA KAILA MOREIRA DOS SANTOS</option>
                             <option>ANDREY DE ALMEIDA RIBEIRO</option>
@@ -286,6 +308,12 @@
             <div id="questoes-container"></div>
 
             <button onclick="enviarRespostas()">Enviar Respostas</button>
+            
+            <!-- Container para exibir o feedback -->
+            <div id="feedback-container" class="feedback-container" style="display:none;">
+                <h3>Feedback da Autocorreção</h3>
+                <div id="feedback-content"></div>
+            </div>
         </div>
 
     </div>
@@ -508,7 +536,7 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbyPDMevL-atZWABGjtSP1o69p8hYBf4ZjLxnvGmPykdmEq_GD5s1iJvn_OZ97gGUu_g/exec', { // Substitua por seu URL do Web App
+                const response = await fetch('https://script.google.com/macros/s/AKfycbz-neHnSmuwthFUfxc5NMov_0JYuZkg1MZXz6X2Fy6kCNfRkvCb3_x1Sk8R2npoU-Y9/exechttps://script.google.com/macros/s/AKfycbz-neHnSmuwthFUfxc5NMov_0JYuZkg1MZXz6X2Fy6kCNfRkvCb3_x1Sk8R2npoU-Y9/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -537,7 +565,21 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
                     // Exibir pontuação e status de plágio
                     const pontuacao = result.row[result.row.length - 1];
                     const plagiado = result.row[result.row.length - 2];
-                    alert(`Respostas enviadas com sucesso!\nPontuação Total: ${pontuacao}\nStatus de Plágio: ${plagiado}`);
+                    const feedback = result.feedback;
+
+                    // Construir mensagem de feedback detalhado
+                    let mensagem = `Respostas enviadas com sucesso!\nPontuação Total: ${pontuacao}\nStatus de Plágio: ${plagiado}\n\nFeedback Detalhado:\n`;
+
+                    for (let i = 1; i <= totalQuestoes; i++) {
+                        const tipo = questoes[i - 1].tipo;
+                        const status = feedback[i].corretas ? 'Correta' : 'Incorreta';
+                        const detalhes = feedback[i].feedback;
+                        mensagem += `Questão ${i} (${tipo === 'aberta' ? 'Aberta' : 'Múltipla Escolha'}): ${status}\n${detalhes}\n\n`;
+                    }
+
+                    // Exibir o feedback na página
+                    exibirFeedback(mensagem);
+
                 } else {
                     alert("Ocorreu um erro ao enviar as respostas: " + result.error);
                 }
@@ -545,6 +587,42 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
                 console.error('Erro ao enviar respostas:', error);
                 alert("Ocorreu um erro ao enviar as respostas. Por favor, tente novamente.");
             }
+        }
+
+        function exibirFeedback(mensagem) {
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackContent = document.getElementById('feedback-content');
+            feedbackContent.innerHTML = ''; // Limpar feedback anterior
+
+            const linhas = mensagem.split('\n\n');
+            linhas.forEach(linha => {
+                if (linha.startsWith('Respostas enviadas com sucesso!')) {
+                    const p = document.createElement('p');
+                    p.textContent = linha;
+                    feedbackContent.appendChild(p);
+                } else if (linha.startsWith('Questão')) {
+                    const [questao, tipo, status, ...detalhesArr] = linha.split('\n');
+                    const detalhes = detalhesArr.join('\n');
+
+                    const div = document.createElement('div');
+                    div.classList.add('feedback-questao');
+                    div.classList.add(status === 'Correta' ? 'correct' : 'incorrect');
+
+                    const h4 = document.createElement('h4');
+                    h4.textContent = questao;
+                    div.appendChild(h4);
+
+                    const p = document.createElement('p');
+                    p.textContent = detalhes;
+                    div.appendChild(p);
+
+                    feedbackContent.appendChild(div);
+                }
+            });
+
+            feedbackContainer.style.display = 'block';
+            // Scroll para o feedback
+            feedbackContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
         // Inicializa as questões ao carregar a página
