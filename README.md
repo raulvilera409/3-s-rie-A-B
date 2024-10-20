@@ -277,7 +277,7 @@
             try {
                 const response = await fetch('https://script.google.com/macros/s/SEU_SCRIPT_ID/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
-                    mode: 'no-cors', // Necessário para evitar problemas de CORS
+                    mode: 'no-cors', // Necessrio para evitar problemas de CORS
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
