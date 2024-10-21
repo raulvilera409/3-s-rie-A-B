@@ -170,6 +170,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-top: 20px;
+            display: none; /* Inicialmente escondido */
         }
         .feedback-container h3 {
             margin-top: 0;
@@ -302,7 +303,7 @@
                 </div>
             </div>
 
-            <h2 style="text-align: center;">ATIVIDADE QUÍMICA APLICADA</h2>
+            <h2 style="text-align: center;">ATIVIDADE DE QUÍMICA APLICADA</h2>
             <p style="text-align: center;">TEMA: QUÍMICA ALIMENTAR</p>
 
             <div id="questoes-container"></div>
@@ -310,14 +311,13 @@
             <button onclick="enviarRespostas()">Enviar Respostas</button>
             
             <!-- Container para exibir o feedback -->
-            <div id="feedback-container" class="feedback-container" style="display:none;">
+            <div id="feedback-container" class="feedback-container">
                 <h3>Feedback da Autocorreção</h3>
                 <div id="feedback-content"></div>
             </div>
         </div>
 
-    </div>
-
+    </body>
     <script>
         const questoes = [
             {
@@ -536,7 +536,7 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwJuTUQ9KHVTSG12FJuS7qlbFDNT5A8WqBgIShgmlhuCIM23_eV5_xaAUH2yxdL9xJU/exec', { // Substitua por seu URL do Web App
+                const response = await fetch('https://script.google.com/macros/s/AKfycbzB-ujalQo_t6xDO6LrjTYB2Ei3kvCWpq3yrefl9tAzbTP0mZR9g5ItfQCAKhaimTCj/exec', { // Substitua por seu URL do Web App
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -567,18 +567,31 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
                     const plagiado = result.row[result.row.length - 2];
                     const feedback = result.feedback;
 
-                    // Construir mensagem de feedback detalhado
-                    let mensagem = `Respostas enviadas com sucesso!\nPontuação Total: ${pontuacao}\nStatus de Plágio: ${plagiado}\n\nFeedback Detalhado:\n`;
+                    // Construir feedback detalhado
+                    let feedbackHTML = `<p><strong>Pontuação Total:</strong> ${pontuacao} / 10</p>`;
+                    feedbackHTML += `<p><strong>Status de Plágio:</strong> ${plagiado}</p><hr>`;
+                    feedbackHTML += `<h4>Feedback Detalhado:</h4>`;
 
                     for (let i = 1; i <= totalQuestoes; i++) {
                         const tipo = questoes[i - 1].tipo;
                         const status = feedback[i].corretas ? 'Correta' : 'Incorreta';
                         const detalhes = feedback[i].feedback;
-                        mensagem += `Questão ${i} (${tipo === 'aberta' ? 'Aberta' : 'Múltipla Escolha'}): ${status}\n${detalhes}\n\n`;
+                        feedbackHTML += `
+                            <div class="feedback-questao ${feedback[i].corretas ? 'correct' : 'incorrect'}">
+                                <p><strong>Questão ${i} (${tipo === 'aberta' ? 'Aberta' : 'Múltipla Escolha'}):</strong> ${status}</p>
+                                <p>${detalhes}</p>
+                            </div>
+                        `;
                     }
 
                     // Exibir o feedback na página
-                    exibirFeedback(mensagem);
+                    const feedbackContainer = document.getElementById('feedback-container');
+                    const feedbackContent = document.getElementById('feedback-content');
+                    feedbackContent.innerHTML = feedbackHTML;
+                    feedbackContainer.style.display = 'block';
+
+                    // Scroll para o feedback
+                    feedbackContainer.scrollIntoView({ behavior: 'smooth' });
 
                 } else {
                     alert("Ocorreu um erro ao enviar as respostas: " + result.error);
@@ -589,45 +602,8 @@ Questão: Qual é um exemplo prático de alimentos fortificados disponíveis em 
             }
         }
 
-        function exibirFeedback(mensagem) {
-            const feedbackContainer = document.getElementById('feedback-container');
-            const feedbackContent = document.getElementById('feedback-content');
-            feedbackContent.innerHTML = ''; // Limpar feedback anterior
-
-            const linhas = mensagem.split('\n\n');
-            linhas.forEach(linha => {
-                if (linha.startsWith('Respostas enviadas com sucesso!')) {
-                    const p = document.createElement('p');
-                    p.textContent = linha;
-                    feedbackContent.appendChild(p);
-                } else if (linha.startsWith('Questão')) {
-                    const [questao, tipo, status, ...detalhesArr] = linha.split('\n');
-                    const detalhes = detalhesArr.join('\n');
-
-                    const div = document.createElement('div');
-                    div.classList.add('feedback-questao');
-                    div.classList.add(status === 'Correta' ? 'correct' : 'incorrect');
-
-                    const h4 = document.createElement('h4');
-                    h4.textContent = questao;
-                    div.appendChild(h4);
-
-                    const p = document.createElement('p');
-                    p.textContent = detalhes;
-                    div.appendChild(p);
-
-                    feedbackContent.appendChild(div);
-                }
-            });
-
-            feedbackContainer.style.display = 'block';
-            // Scroll para o feedback
-            feedbackContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
         // Inicializa as questões ao carregar a página
         window.onload = gerarQuestoes;
     </script>
 
-</body>
 </html>
